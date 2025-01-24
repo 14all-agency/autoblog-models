@@ -9,6 +9,8 @@ export const ImageAspectRatioResult = z.union([
   z.literal("PORTRAIT"),
 ]).optional().nullable().describe("What type of image aspect ratio to sort for");
 
+export type ImageAspectRatio = z.infer<typeof ImageAspectRatioResult>;
+
 export const ImageSourceResult = z.union([
   z.literal("ANY"),
   z.literal("PRODUCTS"),
@@ -28,11 +30,23 @@ export const ProductResult = z.object({
   url: z.string().nullable().optional(),
 });
 
+export type Product = z.infer<typeof ProductResult>;
+
+export const ImageResult = z.object({
+  url: z.string().nullable().optional().describe("Sourced image URL"),
+  alt: z.string().nullable().optional().describe("Sourced image alt text"),
+  credit: z.string().nullable().optional().describe("Sourced image credit/attribution"),
+});
+
+export type Image = z.infer<typeof ImageResult>;
+
 export const UpcomingPostsResult = z.object({
   title: z.string().nullable().optional().describe("Title of post, used to generate the content"),
-  image: z.string().nullable().optional().describe("Sourced image URL"),
+  image: ImageResult.nullable().optional().describe("The sourced image"),
   products: z.array(ProductResult).nullable().optional().describe("Products we will be including in post")
 }).describe("An upcoming blog post prompt");
+
+export type UpcomingPosts = z.infer<typeof UpcomingPostsResult>;
 
 export const BlogInputResult = z.object({
   disabled: z.boolean().nullable().optional(),
@@ -42,11 +56,11 @@ export const BlogInputResult = z.object({
   enabledFormats: z.object({
     allEnabled: z.boolean().nullable().optional(),
     enabled: z.array(z.string()).nullable().optional().describe("Array of blog post formats")
-  }).describe("Keeps track of what blog post formats we are using e.g. Listicles"),
+  }).nullable().optional().describe("Keeps track of what blog post formats we are using e.g. Listicles"),
   enabledProducts: z.object({
     allEnabled: z.boolean().nullable().optional(),
     enabled: z.array(ProductResult).nullable().optional().describe("Array of approved products")
-  }).describe("Keeps track of what products we are mentioning in posts"),
+  }).nullable().optional().describe("Keeps track of what products we are mentioning in posts"),
   keywords: z.array(z.string()).nullable().optional().describe("Array of keywords to mention in blog posts"),
   authorName: z.string().nullable().optional().describe("Name of author when publishing"),
   blogId: z.string().nullable().optional().describe("ID of blog we are publishing to"),
