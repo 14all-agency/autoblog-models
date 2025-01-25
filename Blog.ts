@@ -48,6 +48,13 @@ export const UpcomingPostsResult = z.object({
 
 export type UpcomingPosts = z.infer<typeof UpcomingPostsResult>;
 
+export const CompletedPostsResult = z.object({
+  title: z.string().nullable().optional().describe("Title of post, used to generate the content"),
+  id: z.string().nullable().optional().describe("GQL ID for post"),
+}).describe("An upcoming blog post prompt");
+
+export type CompletedPosts = z.infer<typeof CompletedPostsResult>;
+
 export const BlogInputResult = z.object({
   disabled: z.boolean().nullable().optional(),
   // Settings
@@ -85,6 +92,8 @@ export const BlogInputResult = z.object({
   imageWidth: z.number().nullable().optional().describe("Image keywords to override image searching"),
   // Upcoming posts
   upcomingPosts: z.array(UpcomingPostsResult).nullable().optional().describe("Array of upcoming blog posts for this blog"),
+  // Completed posts
+  completedPosts: z.array(CompletedPostsResult).nullable().optional().describe("Array of blog posts we have already generated"),
 });
 
 export type BlogInputResultEntity = z.infer<typeof BlogInputResult>;
