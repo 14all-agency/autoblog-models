@@ -21,17 +21,22 @@ export const OrganisationResult = z.object({
   country: z.string().optional().nullable().describe("country of origin"),
   plan: z.string().optional().nullable().describe("shopify plan"),
   website: z.string().optional().nullable().describe("website URL"),
-  orgType: z.null().optional(),
   createdAt: z.date().nullable().optional(),
   shopifyConnection: ShopifyConnectionResult,
   shopifyConnectionStatus: ShopifyStatusResult,
+  // Billing stuff
+  billingPlanStatus: z.union([
+    z.literal("INACTIVE"),
+    z.literal("ACTIVE"),
+  ]).optional().nullable(),
+  billingSubscriptionId: z.string().optional().nullable(),
+  billingPlanHandle: z.string().optional().nullable(),
 });
 
 export type OrganisationResultEntity = z.infer<typeof OrganisationResult>;
 
 export const OrganisationModelSchema = z.object({
   id: z.string(),
-  orgType: OrganisationResult.shape.orgType,
   country: OrganisationResult.shape.country,
   plan: OrganisationResult.shape.plan,
   website: OrganisationResult.shape.website,
@@ -39,6 +44,9 @@ export const OrganisationModelSchema = z.object({
   shopifyConnectionStatus: OrganisationResult.shape.shopifyConnectionStatus,
   createdAt: OrganisationResult.shape.createdAt,
   shopifySite: z.string().nullable().optional(),
+  billingPlanStatus: OrganisationResult.shape.billingPlanStatus,
+  billingSubscriptionId: OrganisationResult.shape.billingSubscriptionId,
+  billingPlanHandle: OrganisationResult.shape.billingPlanHandle,
 });
 
 export type OrganisationModel = z.infer<typeof OrganisationModelSchema>;
@@ -51,7 +59,6 @@ export const OrganisationModel = {
 
     const obj: OrganisationModel = {
       id: entity._id.toHexString(),
-      orgType: null,
       country: entity.country || null,
       plan: entity.plan || null,
       website: entity.website || null,
@@ -59,6 +66,9 @@ export const OrganisationModel = {
       shopifyConnection: includeCredentials ? (entity.shopifyConnection || null) : null,
       shopifyConnectionStatus: entity.shopifyConnectionStatus || "INACTIVE",
       shopifySite: entity?.shopifyConnection?.domain || null,
+      billingPlanStatus: entity.billingPlanStatus || "INACTIVE",
+      billingSubscriptionId: entity.billingSubscriptionId || null,
+      billingPlanHandle: entity.billingPlanHandle || null,
     };
     return OrganisationModelSchema.parse(obj);
   },
