@@ -19,6 +19,7 @@ export const ShopifyStatusResult = z.union([
 export const OrganisationResult = z.object({
   _id: z.instanceof(ObjectId),
   country: z.string().optional().nullable().describe("country of origin"),
+  locale: z.string().optional().nullable().describe("shop locale / language"),
   plan: z.string().optional().nullable().describe("shopify plan"),
   website: z.string().optional().nullable().describe("website URL"),
   topics: z.array(z.string()).optional().nullable().describe("Suggested website topics"),
@@ -39,6 +40,7 @@ export type OrganisationResultEntity = z.infer<typeof OrganisationResult>;
 export const OrganisationModelSchema = z.object({
   id: z.string(),
   country: OrganisationResult.shape.country,
+  locale: OrganisationResult.shape.locale,
   plan: OrganisationResult.shape.plan,
   website: OrganisationResult.shape.website,
   topics: OrganisationResult.shape.topics,
@@ -62,6 +64,7 @@ export const OrganisationModel = {
     const obj: OrganisationModel = {
       id: entity._id.toHexString(),
       country: entity.country || null,
+      locale: entity.locale || null,
       plan: entity.plan || null,
       website: entity.website || null,
       topics: entity.topics || null,
