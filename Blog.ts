@@ -66,7 +66,8 @@ export const BlogInputResult = z.object({
   }).nullable().optional().describe("Keeps track of what blog post formats we are using e.g. Listicles"),
   enabledProducts: z.object({
     allEnabled: z.boolean().nullable().optional(),
-    enabled: z.array(ProductResult).nullable().optional().describe("Array of approved products")
+    enabled: z.array(ProductResult).nullable().optional().describe("Array of approved products"),
+    enabledCollections: z.array(ProductResult).nullable().optional().describe("Array of approved collections"),
   }).nullable().optional().describe("Keeps track of what products we are mentioning in posts"),
   keywords: z.array(z.string()).nullable().optional().describe("Array of keywords to mention in blog posts"),
   authorName: z.string().nullable().optional().describe("Name of author when publishing"),
