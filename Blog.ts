@@ -28,6 +28,7 @@ export const ProductResult = z.object({
   image: z.string().nullable().optional(),
   title: z.string().nullable().optional(),
   url: z.string().nullable().optional(),
+  description: z.string().nullable().optional(),
 });
 
 export type Product = z.infer<typeof ProductResult>;
