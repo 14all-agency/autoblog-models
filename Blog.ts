@@ -93,6 +93,7 @@ export const BlogInputResult = z.object({
   imageSource: ImageSourceResult,
   imageWidth: z.number().nullable().optional().describe("Image keywords to override image searching"),
   enableProductPhotos: z.boolean().nullable().optional().describe("Add photos of your products inside the blog content?"),
+  enableKeywordTagging: z.boolean().nullable().optional().describe("Add your keywords as tags to the blog post"),
   // Upcoming posts
   upcomingPosts: z.array(UpcomingPostsResult).nullable().optional().describe("Array of upcoming blog posts for this blog"),
   // Completed posts
