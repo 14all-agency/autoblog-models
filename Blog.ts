@@ -52,6 +52,8 @@ export type UpcomingPosts = z.infer<typeof UpcomingPostsResult>;
 export const CompletedPostsResult = z.object({
   title: z.string().nullable().optional().describe("Title of post, used to generate the content"),
   id: z.string().nullable().optional().describe("GQL ID for post"),
+  image: z.string().nullable().optional().describe("Image URL"),
+  url: z.string().nullable().optional().describe("Post URL"),
 }).describe("An upcoming blog post prompt");
 
 export type CompletedPosts = z.infer<typeof CompletedPostsResult>;
