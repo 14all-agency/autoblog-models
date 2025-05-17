@@ -44,7 +44,8 @@ export type Image = z.infer<typeof ImageResult>;
 export const UpcomingPostsResult = z.object({
   title: z.string().nullable().optional().describe("Title of post, used to generate the content"),
   image: ImageResult.nullable().optional().describe("The sourced image"),
-  products: z.array(ProductResult).nullable().optional().describe("Products we will be including in post")
+  products: z.array(ProductResult).nullable().optional().describe("Products we will be including in post"),
+  manualTitle: z.boolean().nullable().optional().describe("Whether or not the title was manually set by user"),
 }).describe("An upcoming blog post prompt");
 
 export type UpcomingPosts = z.infer<typeof UpcomingPostsResult>;
@@ -54,12 +55,14 @@ export const CompletedPostsResult = z.object({
   id: z.string().nullable().optional().describe("GQL ID for post"),
   image: z.string().nullable().optional().describe("Image URL"),
   url: z.string().nullable().optional().describe("Post URL"),
+  manualTitle: z.boolean().nullable().optional().describe("Whether or not the title was manually set by user"),
 }).describe("An upcoming blog post prompt");
 
 export type CompletedPosts = z.infer<typeof CompletedPostsResult>;
 
 export const BlogInputResult = z.object({
   disabled: z.boolean().nullable().optional(),
+  disabledReason: z.string().nullable().optional().describe("The reason for why the post was disabled"),
   // Settings
   blogType: BlogTypeResult,
   blogTopic: z.string().nullable().optional().describe("Supplied prompt/topic for writing TOPIC posts"),
