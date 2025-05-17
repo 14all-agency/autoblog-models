@@ -60,6 +60,13 @@ export const CompletedPostsResult = z.object({
 
 export type CompletedPosts = z.infer<typeof CompletedPostsResult>;
 
+export const HourOfDayResult = z.union([
+  z.literal("ANY"),
+  z.number().int().min(0).max(23)
+]).describe("Either the hour of day (0-23) or 'any hour'");
+
+export type HourOfDay = z.infer<typeof HourOfDayResult>;
+
 export const BlogInputResult = z.object({
   disabled: z.boolean().nullable().optional(),
   disabledReason: z.string().nullable().optional().describe("The reason for why the post was disabled"),
@@ -80,6 +87,7 @@ export const BlogInputResult = z.object({
   blogId: z.string().nullable().optional().describe("ID of blog we are publishing to"),
   language: z.string().nullable().optional().describe("Language of blog"),
   publishPosts: z.boolean().nullable().optional().describe("Published as draft if false, active if true"),
+  hourOfDay: z.array(HourOfDayResult).nullable().optional().describe("The hour of day which we will post at (UTC)"),
   publishDays: z.object({
     monday: z.boolean().nullable().optional(),
     tuesday: z.boolean().nullable().optional(),
