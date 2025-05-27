@@ -35,6 +35,7 @@ export const OrganisationResult = z.object({
   ]).optional().nullable(),
   billingSubscriptionId: z.string().optional().nullable(),
   billingPlanHandle: z.string().optional().nullable(),
+  billingUpdatedAt: z.date().nullable().optional(),
 });
 
 export type OrganisationResultEntity = z.infer<typeof OrganisationResult>;
