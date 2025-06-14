@@ -26,6 +26,7 @@ export const OrganisationResult = z.object({
   plan: z.string().optional().nullable().describe("shopify plan"),
   website: z.string().optional().nullable().describe("website URL"),
   topics: z.array(z.string()).optional().nullable().describe("Suggested website topics"),
+  settingsLastSynced: z.date().nullable().optional(),
   createdAt: z.date().nullable().optional(),
   shopifyConnection: ShopifyConnectionResult,
   shopifyConnectionStatus: ShopifyStatusResult,
@@ -54,10 +55,12 @@ export const OrganisationModelSchema = z.object({
   shopifyConnection: OrganisationResult.shape.shopifyConnection,
   shopifyConnectionStatus: OrganisationResult.shape.shopifyConnectionStatus,
   createdAt: OrganisationResult.shape.createdAt,
+  settingsLastSynced: OrganisationResult.shape.settingsLastSynced,
   shopifySite: z.string().nullable().optional(),
   billingPlanStatus: OrganisationResult.shape.billingPlanStatus,
   billingSubscriptionId: OrganisationResult.shape.billingSubscriptionId,
   billingPlanHandle: OrganisationResult.shape.billingPlanHandle,
+  billingUpdatedAt: OrganisationResult.shape.billingUpdatedAt,
 });
 
 export type OrganisationModel = z.infer<typeof OrganisationModelSchema>;
@@ -79,12 +82,14 @@ export const OrganisationModel = {
       website: entity.website || null,
       topics: entity.topics || null,
       createdAt: new Date(entity.createdAt || new Date()),
+      settingsLastSynced: entity.settingsLastSynced ? new Date(entity.settingsLastSynced || new Date()) : null,
       shopifyConnection: includeCredentials ? (entity.shopifyConnection || null) : null,
       shopifyConnectionStatus: entity.shopifyConnectionStatus || "INACTIVE",
       shopifySite: entity?.shopifyConnection?.domain || null,
       billingPlanStatus: entity.billingPlanStatus || "INACTIVE",
       billingSubscriptionId: entity.billingSubscriptionId || null,
       billingPlanHandle: entity.billingPlanHandle || null,
+      billingUpdatedAt: entity.billingUpdatedAt ? new Date(entity.billingUpdatedAt || new Date()) : null,
     };
     return OrganisationModelSchema.parse(obj);
   },
