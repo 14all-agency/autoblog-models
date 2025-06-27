@@ -159,7 +159,7 @@ export const BlogModel = {
       ...entity,
       id: entity._id.toHexString(),
       // @ts-ignore
-      org: ObjectId.isValid(entity.org) ? entity._id.toHexString() : OrganisationModel.convertFromEntity(entity.org, includeCredentials),
+      org: ObjectId.isValid(entity.org) ? entity.org.toHexString() : OrganisationModel.convertFromEntity(entity.org, includeCredentials),
       ...entity.lastPostPublished && { lastPostPublished: new Date(entity.lastPostPublished || new Date()) },
       ...entity.lastUpdated && { lastUpdated: new Date(entity.lastUpdated || new Date()) },
       ...entity.createdAt && { createdAt: new Date(entity.createdAt || new Date()) },
