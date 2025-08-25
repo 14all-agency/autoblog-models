@@ -106,6 +106,7 @@ export const BlogInputResult = z.object({
   imageSource: ImageSourceResult,
   imageWidth: z.number().nullable().optional().describe("Image keywords to override image searching"),
   enableProductPhotos: z.boolean().nullable().optional().describe("Add photos of your products inside the blog content?"),
+  enableArticleLinks: z.boolean().nullable().optional().describe("Add your completed posts as links"),
   enableKeywordTagging: z.boolean().nullable().optional().describe("Add your keywords as tags to the blog post"),
   enableKeywordTaggingAutomatedKeywords: z.boolean().nullable().optional().describe("Add your automated keywords as tags to the blog post"),
   blogShopifyTemplate: z.string().nullable().optional().describe("Manually override the Shopify article template that will be set for this blog (will use default if empty)"),
