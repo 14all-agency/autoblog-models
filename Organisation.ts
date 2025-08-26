@@ -31,6 +31,7 @@ export const OrganisationResult = z.object({
   createdAt: z.date().nullable().optional(),
   shopifyConnection: ShopifyConnectionResult,
   shopifyConnectionStatus: ShopifyStatusResult,
+  shopCreatedAt: z.string().optional().nullable().describe("shop created at"),
   // Billing stuff
   billingPlanStatus: z.union([
     z.literal("INACTIVE"),
@@ -57,6 +58,7 @@ export const OrganisationModelSchema = z.object({
   shopifyConnection: OrganisationResult.shape.shopifyConnection,
   shopifyConnectionStatus: OrganisationResult.shape.shopifyConnectionStatus,
   createdAt: OrganisationResult.shape.createdAt,
+  shopCreatedAt: OrganisationResult.shape.shopCreatedAt,
   settingsLastSynced: OrganisationResult.shape.settingsLastSynced,
   shopifySite: z.string().nullable().optional(),
   billingPlanStatus: OrganisationResult.shape.billingPlanStatus,
@@ -85,6 +87,7 @@ export const OrganisationModel = {
       website: entity.website || null,
       topics: entity.topics || null,
       createdAt: new Date(entity.createdAt || new Date()),
+      shopCreatedAt: entity.shopCreatedAt || null,
       settingsLastSynced: entity.settingsLastSynced ? new Date(entity.settingsLastSynced || new Date()) : null,
       shopifyConnection: includeCredentials ? (entity.shopifyConnection || null) : null,
       shopifyConnectionStatus: entity.shopifyConnectionStatus || "INACTIVE",
