@@ -101,6 +101,7 @@ export const BlogInputResult = z.object({
   titleWordLimit: z.number().nullable().optional().describe("Word limit for titles"),
   bodyCustomPrompt: z.string().nullable().optional().describe("Additional instructions for generating blog post content"),
   bodyWordCount: z.number().nullable().optional().describe("preferred word count for articles"),
+  productLimit: z.number().nullable().optional().describe("Limit of products to include, default 5"),
   imageKeywords: z.string().nullable().optional().describe("Image keywords to override image searching"),
   imageAspectRatio: ImageAspectRatioResult,
   imageSource: ImageSourceResult,
