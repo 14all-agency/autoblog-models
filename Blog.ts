@@ -81,6 +81,7 @@ export const BlogInputResult = z.object({
     allEnabled: z.boolean().nullable().optional(),
     enabled: z.array(ProductResult).nullable().optional().describe("Array of approved products"),
     enabledCollections: z.array(ProductResult).nullable().optional().describe("Array of approved collections"),
+    excludedCollections: z.array(ProductResult).nullable().optional().describe("Array of collections to exclude from product queries"),
   }).nullable().optional().describe("Keeps track of what products we are mentioning in posts"),
   keywords: z.array(z.string()).nullable().optional().describe("Array of keywords to mention in blog posts"),
   authorName: z.string().nullable().optional().describe("Name of author when publishing"),
