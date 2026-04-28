@@ -1,6 +1,13 @@
 import { ObjectId } from 'bson';
 import { z } from "zod";
 
+export const ProductSortOrderResult = z.union([
+  z.literal("UPDATED_FIRST"),
+  z.literal("CREATED_FIRST"),
+]).optional().nullable();
+
+export type ProductSortOrder = z.infer<typeof ProductSortOrderResult>;
+
 export const ShopifyConnectionResult = z.object({
   apiKey: z.string(),
   domain: z.string(),
@@ -29,6 +36,7 @@ export const OrganisationResult = z.object({
   topics: z.array(z.string()).optional().nullable().describe("Suggested website topics"),
   settingsLastSynced: z.date().nullable().optional(),
   createdAt: z.date().nullable().optional(),
+  productSortOrder: ProductSortOrderResult,
   shopifyConnection: ShopifyConnectionResult,
   shopifyConnectionStatus: ShopifyStatusResult,
   shopCreatedAt: z.string().optional().nullable().describe("shop created at"),
@@ -57,6 +65,7 @@ export const OrganisationModelSchema = z.object({
   topics: OrganisationResult.shape.topics,
   shopifyConnection: OrganisationResult.shape.shopifyConnection,
   shopifyConnectionStatus: OrganisationResult.shape.shopifyConnectionStatus,
+  productSortOrder: OrganisationResult.shape.productSortOrder,
   createdAt: OrganisationResult.shape.createdAt,
   shopCreatedAt: OrganisationResult.shape.shopCreatedAt,
   settingsLastSynced: OrganisationResult.shape.settingsLastSynced,
@@ -87,6 +96,7 @@ export const OrganisationModel = {
       website: entity.website || null,
       topics: entity.topics || null,
       createdAt: new Date(entity.createdAt || new Date()),
+      productSortOrder: entity.productSortOrder || "UPDATED_FIRST",
       shopCreatedAt: entity.shopCreatedAt || null,
       settingsLastSynced: entity.settingsLastSynced ? new Date(entity.settingsLastSynced || new Date()) : null,
       shopifyConnection: includeCredentials ? (entity.shopifyConnection || null) : null,
