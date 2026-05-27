@@ -109,6 +109,21 @@ export const BlogInputResult = z.object({
   imageWidth: z.number().nullable().optional().describe("Image keywords to override image searching"),
   enableProductPhotos: z.boolean().nullable().optional().describe("Add photos of your products inside the blog content?"),
   enableFaqs: z.boolean().nullable().optional().describe("Add FAQs to the blog content?"),
+  enableFaqJsonLdSchema: z
+    .boolean()
+    .nullable()
+    .optional()
+    .describe("Add FAQ JSON-LD schema to the produced blog HTML?"),
+  enableArticleJsonLdSchema: z
+    .boolean()
+    .nullable()
+    .optional()
+    .describe("Add Article JSON-LD schema to the produced blog HTML?"),
+  enableBreadcrumbJsonLdSchema: z
+    .boolean()
+    .nullable()
+    .optional()
+    .describe("Add BreadcrumbList JSON-LD schema to the produced blog HTML?"),
   enableTableOfContents: z.boolean().nullable().optional().describe("Add table of contents to blog content?"),
   enableArticleLinks: z.boolean().nullable().optional().describe("Add your completed posts as links"),
   enableKeywordTagging: z.boolean().nullable().optional().describe("Add your keywords as tags to the blog post"),
