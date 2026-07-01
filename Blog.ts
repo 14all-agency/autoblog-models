@@ -124,6 +124,11 @@ export const BlogInputResult = z.object({
     .nullable()
     .optional()
     .describe("Add BreadcrumbList JSON-LD schema to the produced blog HTML?"),
+  enableRelativeInternalLinks: z
+    .boolean()
+    .nullable()
+    .optional()
+    .describe("Convert same-site Shopify content links to relative URLs in produced blog HTML?"),
   enableTableOfContents: z.boolean().nullable().optional().describe("Add table of contents to blog content?"),
   enableArticleLinks: z.boolean().nullable().optional().describe("Add your completed posts as links"),
   enableKeywordTagging: z.boolean().nullable().optional().describe("Add your keywords as tags to the blog post"),
